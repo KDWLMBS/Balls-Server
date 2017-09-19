@@ -1,13 +1,13 @@
 {
-  "name": "kdwlmbs-web-app",
+  "name": "balls-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "./server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Proxey <github.com/proxey>",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.0",
     "body-parser": "^1.18.1",
