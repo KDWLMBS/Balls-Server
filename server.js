@@ -2,6 +2,7 @@ const log4js = require('log4js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 //setup log4js (affects log4js globally)
 log4js.configure({
@@ -16,6 +17,7 @@ const logger = log4js.getLogger();
 const app = express();
 
 //setup all the express middleware and config
+app.use(cors());
 app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.set('www-dir', path.join(__dirname, '..', 'www'));
