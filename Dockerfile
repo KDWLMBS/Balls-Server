@@ -3,4 +3,5 @@ RUN mkdir /app
 COPY . /app
 RUN cd /app \
  && npm i --loglevel=warn
+EXPOSE 8080
 CMD ["node", "/app"]
