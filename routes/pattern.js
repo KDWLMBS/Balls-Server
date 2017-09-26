@@ -1,5 +1,8 @@
 const express = require('express');
 const Pattern = require('../model/pattern');
+const log4js = require('log4js');
+const logger = log4js.getLogger('route:pattern');
+const bridgeService = require('../services/bridge-service');
 
 //create a new router for all the pattern routes
 const router = express.Router();
@@ -36,6 +39,15 @@ router.post('/:id', async(req, res) => {
     pattern.lastModified = Date.now();
     await pattern.save();
     res.send(pattern);
+});
+
+
+router.post('/play/:id', async (req, res) => {
+	if(req.body) {
+		logger.warn('/pattern/play was called with a body. this is not needed');
+	}
+	let pattern = await Pattern.findById(req.params.id);
+	bridgeService.play(pattern);
 });
 
 

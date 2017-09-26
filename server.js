@@ -2,6 +2,8 @@ const log4js = require('log4js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const io = require('socket.io');
+const bridgeService = require('./services/bridge-service');
 
 //setup log4js (affects log4js globally)
 log4js.configure({
@@ -25,6 +27,16 @@ app.use('/', express.static(app.get('www-dir')));
 app.use('/api/pattern', require('./routes/pattern'));
 
 //start the server
-app.listen(app.get('port'), () => {
+let server = app.listen(app.get('port'), () => {
     logger.info(`the server is now listening on port ${app.get('port')}`);
 });
+
+let socket = io(server);
+socket.on('connection', connection => {
+	logger.info('client connected');
+	connection.on('setPosition', (index, position) => {
+		bridgeService.setPosition(index, position);
+	});
+})
+
+bridgeService.setPosition(1, -100);
