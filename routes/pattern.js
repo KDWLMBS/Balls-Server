@@ -29,4 +29,14 @@ router.put('/', async(req, res) => {
 });
 
 
+router.post('/:id', async(req, res) => {
+    let pattern = await Pattern.findById(req.params.id);
+    pattern.frames = req.body.frames;
+    pattern.name = req.body.name;
+    pattern.lastModified = Date.now();
+    await pattern.save();
+    res.send(pattern);
+});
+
+
 module.exports = router;
