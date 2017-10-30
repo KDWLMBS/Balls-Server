@@ -41,7 +41,11 @@ class BridgeService {
 	}
 
 	_sendPositions() {
-		fs.writeFile(path.join(__dirname, 'pos'), this.positions.join(','));
+		fs.writeFile(path.join(__dirname, 'pos'), this.positions.join(','), (err) => {
+			if(err) {
+				logger.erro('failed to write the pos file', err);
+			}
+		});
 	}
 
 	// playPattern(pattern) {

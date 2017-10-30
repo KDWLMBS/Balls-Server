@@ -1,7 +1,7 @@
 const express = require('express');
 const Formula = require('../model/formula');
 const log4js = require('log4js');
-const logger = log4js.getLogger('route:pattern');
+const logger = log4js.getLogger('route:formula');
 const bridgeService = require('../services/bridge-service');
 
 //create a new router for all the pattern routes
