@@ -43,11 +43,11 @@ router.post('/:id', async(req, res) => {
 
 
 router.post('/play/:id', async (req, res) => {
-	if(req.body) {
+	if(req.body && req.body._id) {
 		logger.warn('/pattern/play was called with a body. this is not needed');
 	}
 	let pattern = await Pattern.findById(req.params.id);
-	bridgeService.play(pattern);
+	bridgeService.playPattern(pattern);
 });
 
 

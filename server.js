@@ -27,6 +27,7 @@ app.set('www-dir', path.join(__dirname, '..', 'www'));
 //setup routes
 app.use('/', express.static(app.get('www-dir')));
 app.use('/api/pattern', require('./routes/pattern'));
+app.use('/api/formula', require('./routes/formula'));
 
 //start the server
 let server = app.listen(app.get('port'), () => {
@@ -39,6 +40,7 @@ socket.on('connection', connection => {
 	connection.on('setPosition', (index, position) => {
 		bridgeService.setPosition(index, position);
 	});
-})
+  connection.on('frame', frame => {
 
-bridgeService.setPosition(1, -100);
+  });
+});
