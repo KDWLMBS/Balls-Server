@@ -21,6 +21,7 @@ let schema = new mongoose.Schema({
     type: String,
     default: null,
     enum: [
+      null,
       'LEFT',
       'RIGHT'
     ]

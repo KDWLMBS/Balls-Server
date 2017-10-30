@@ -26,9 +26,13 @@ router.delete('/:id', async(req, res) => {
 });
 
 router.put('/', async(req, res) => {
+  try {
     let pattern = new Pattern(req.body);
     await pattern.save();
     res.send(pattern);
+  } catch(e) {
+      logger.error('failed to create the pattern', e);
+  }
 });
 
 
@@ -48,6 +52,7 @@ router.post('/play/:id', async (req, res) => {
 	}
 	let pattern = await Pattern.findById(req.params.id);
 	bridgeService.playPattern(pattern);
+  res.end();
 });
 
 

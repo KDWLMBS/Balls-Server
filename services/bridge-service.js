@@ -20,7 +20,6 @@ class BridgeService {
 
 	loop() {
 		if(this.mode === 'live') {
-			console.log('loop')
 			this._sendPositions();
 		}
 	}
