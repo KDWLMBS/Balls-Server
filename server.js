@@ -6,6 +6,8 @@ const io = require('socket.io');
 const bridgeService = require('./services/bridge-service');
 const cors = require('cors');
 
+const jwt = require('jsonwebtoken');
+
 //setup log4js (affects log4js globally)
 log4js.configure({
     appenders: {default: {type: 'console'}},
@@ -21,14 +23,30 @@ const app = express();
 //setup all the express middleware and config
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.set('port', process.env.PORT || 8080);
 app.set('www-dir', path.join(__dirname, '..', 'www'));
 
+
+function isAuthenticated(req, res, next) {
+  const token = req.headers ? req.headers.authorization : null;
+  if (!token) return res.send('You must supply a token for authorization!');
+  try {
+    const payload = jwt.verify(token.replace('Bearer ', ''), 'secret');
+    console.log(payload);
+    return next();
+  } catch (err) {
+    return res.send('You are not authorized!');
+  }
+}
+
 //setup routes
 app.use('/', express.static(app.get('www-dir')));
-app.use('/api/pattern', require('./routes/pattern'));
-app.use('/api/formula', require('./routes/formula'));
-app.use('/api/live', require('./routes/live'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/pattern', isAuthenticated, require('./routes/pattern'));
+app.use('/api/formula', isAuthenticated, require('./routes/formula'));
+app.use('/api/live', isAuthenticated, require('./routes/live'));
+
 
 //start the server
 let server = app.listen(app.get('port'), () => {
