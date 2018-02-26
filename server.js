@@ -24,7 +24,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 9090);
 app.set('www-dir', path.join(__dirname, '..', 'www'));
 
 
