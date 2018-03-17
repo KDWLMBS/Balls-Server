@@ -3,8 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const io = require('socket.io');
-const bridgeService = require('./services/bridge-service');
 const cors = require('cors');
+const bridgeService = require('./services/bridge-service');
+const isAuthenticated = require('./middleware/auth')
 
 const jwt = require('jsonwebtoken');
 
@@ -26,19 +27,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('port', process.env.PORT || 9090);
 app.set('www-dir', path.join(__dirname, '..', 'www'));
-
-
-function isAuthenticated(req, res, next) {
-  const token = req.headers ? req.headers.authorization : null;
-  if (!token) return res.send('You must supply a token for authorization!');
-  try {
-    const payload = jwt.verify(token.replace('Bearer ', ''), 'secret');
-    console.log(payload);
-    return next();
-  } catch (err) {
-    return res.send('You are not authorized!');
-  }
-}
 
 //setup routes
 app.use('/', express.static(app.get('www-dir')));

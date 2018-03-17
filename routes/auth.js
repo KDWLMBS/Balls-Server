@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const isAuthenticated = require('../middleware/auth')
 const log4js = require('log4js');
 const logger = log4js.getLogger('route:user');
 
@@ -9,6 +10,13 @@ const logger = log4js.getLogger('route:user');
 const router = express.Router();
 
 //setup all the routes (see https://de.wikipedia.org/wiki/CRUD)
+
+router.get('/me', isAuthenticated, async(req, res) => {
+    logger.info(req.userId);
+    const user = await User.findById(req.userId).select('_id email name');
+    if (!user) return res.send({message: `Could not find a user with id: ${req.userId}`});
+    res.json({user});
+});
 
 router.post('/login', async(req, res) => {
     const user = await User.findOne({ email: req.body.email });
