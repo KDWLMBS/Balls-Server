@@ -12,7 +12,6 @@ const router = express.Router();
 //setup all the routes (see https://de.wikipedia.org/wiki/CRUD)
 
 router.get('/me', isAuthenticated, async(req, res) => {
-    logger.info(req.userId);
     const user = await User.findById(req.userId).select('_id email name');
     if (!user) return res.send({message: `Could not find a user with id: ${req.userId}`});
     res.json({user});
@@ -28,8 +27,7 @@ router.post('/login', async(req, res) => {
 });
 
 router.post('/signup', async(req, res) => {
-    if (req.body && !req.body.password) return res.sendStatus(503);
-
+    if (req.body && !req.body.password) return res.json({message: 'Missing parameters!'});
     const password = await bcrypt.hash(req.body.password, 10);
     const user = await User.create({...req.body, password}).catch(err => logger.error(err.message));
     if (!user) return res.json({message: 'Signup failed!'});
