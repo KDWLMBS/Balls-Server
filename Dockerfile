@@ -2,6 +2,6 @@ FROM node:8-alpine
 RUN mkdir /app
 COPY . /app
 RUN cd /app \
- && npm i --loglevel=warn
+ && yarn
 EXPOSE 8080
 CMD ["node", "/app"]

@@ -10,15 +10,15 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "bluebird": "^3.5.0",
-    "body-parser": "^1.18.1",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
     "cors": "^2.8.4",
-    "express": "^4.15.4",
-    "jsonwebtoken": "^8.1.1",
-    "log4js": "^2.3.3",
-    "mongoose": "^4.11.11",
-    "nodemon": "^1.15.1",
-    "socket.io": "^2.0.3",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.0",
+    "log4js": "^2.5.3",
+    "mongoose": "^5.0.11",
+    "nodemon": "^1.17.2",
+    "socket.io": "^2.0.4",
     "underscore": "^1.8.3",
     "unirest": "^0.5.1"
   }
